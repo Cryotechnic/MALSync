@@ -112,7 +112,7 @@
     "@sentry/browser": "^7.7.0",
     "@types/chrome": "0.0.193",
     "@vue/eslint-config-typescript": "^11.0.0",
-    "async-mutex": "^0.3.2",
+    "async-mutex": "^0.5.0",
     "dexie": "^3.2.2",
     "dompurify": "^2.3.10",
     "download-file": "^0.1.5",
