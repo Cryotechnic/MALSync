@@ -33,20 +33,39 @@ async function mixdrop() {
 // pages
 
 async function kickassanime() {
-  const response = await fetch('https://watchanime.io');
-  const body = await response.text();
+  try {
+    const response = await fetch('https://watchanime.io');
+    const body = await response.text();
 
-  const $ = cheerio.load(body);
+    const $ = cheerio.load(body);
 
-  const urls = $('.domain-btn')
-    .map((i, el) => new URL($(el).attr('href')))
-    .get();
+    const urls = $('.domain-btn')
+      .map((i, el) => new URL($(el).attr('href')))
+      .get();
 
-  let formattedUrls = [];
-  for (let url of urls) {
-    formattedUrls.push('*://*.' + url.hostname + '/*');
+    let formattedUrls = [];
+    for (let url of urls) {
+      formattedUrls.push('*://*.' + url.hostname + '/*');
+    }
+    addPageUrls('KickAssAnime', formattedUrls);
+  } catch (error) {
+    if (
+      error?.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' ||
+      error?.code === 'ENOTFOUND' ||
+      error?.code === 'EAI_AGAIN'
+    ) {
+      console.log(
+        '[kickassanime] Domain discovery source is unreachable, using existing URLs as fallback.',
+      );
+      const fallbackUrls = JSON.parse(
+        fs.readFileSync(path.resolve('./src/pages/KickAssAnime/meta.json'), 'utf8'),
+      ).urls.match;
+      addPageUrls('KickAssAnime', fallbackUrls);
+      return;
+    }
+
+    throw error;
   }
-  addPageUrls('KickAssAnime', formattedUrls);
 }
 
 async function miruro() {
