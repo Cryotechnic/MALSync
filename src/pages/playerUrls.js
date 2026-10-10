@@ -580,6 +580,7 @@ module.exports = {
       '*://garylargeavailable.com/e/*',
       '*://jennifereconomicgive.com/e/*',
       '*://pamelachangemission.com/e/*',
+      '*://teresapoliticallearn.com/e/*',
       // auto-voe-replace-dont-remove
     ],
   },
